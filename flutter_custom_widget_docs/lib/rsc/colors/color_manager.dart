@@ -9,6 +9,7 @@ class ColorsApp {
   static Color bgInput = HexColor.fromHex('#F1F5F8');
   static Color bgDisable = HexColor.fromHex('#EAEDF1');
   static Color background = HexColor.fromHex('#E6E6E6');
+  static Color bgBlack = HexColor.fromHex("#FF1E1E1E");
   static Color bgEnhanceVisualBtn = HexColor.fromHex('#F3F3F3');
 
   static Color greyPrimary = HexColor.fromHex('#2F3845');

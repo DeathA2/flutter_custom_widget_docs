@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 List<WidgetPreview> renderPreview({
   required String title,
   required String description,
+  required String widgetCode,
   required String code,
   required Widget widget,
 }) {
@@ -32,6 +33,15 @@ List<WidgetPreview> renderPreview({
     ''',
   );
 
+  final _sourceCode = WidgetPreview(
+    widget: UsageDocWidget(
+      title: "Widget's source code:",
+      content: '''
+   $widgetCode
+  ''',
+    ),
+  );
+
   final _usage = WidgetPreview(
     widget: UsageDocWidget(
       title: "use:",
@@ -40,5 +50,5 @@ List<WidgetPreview> renderPreview({
   ''',
     ),
   );
-  return [_title, _preview, _usage];
+  return [_title, _preview, _usage, _sourceCode];
 }

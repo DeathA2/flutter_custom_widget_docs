@@ -6,6 +6,8 @@ import 'package:flutter_custom_widget_docs/rsc/strings/string_manager.dart';
 import 'package:flutter_custom_widget_docs/rsc/values/values_manager.dart';
 import 'package:flutter_custom_widget_docs/utils/logger.dart';
 import 'package:flutter_custom_widget_docs/widgets/snackBar/custom_snackbar.dart';
+import 'package:flutter_highlight/flutter_highlight.dart';
+import 'package:flutter_highlight/themes/vs2015.dart';
 import 'package:flutter_svg/svg.dart';
 
 class UsageDocWidget extends StatelessWidget {
@@ -22,12 +24,25 @@ class UsageDocWidget extends StatelessWidget {
       children: [
         _renderTitle(),
         Container(
-          color: ColorsApp.background,
-          padding: const EdgeInsets.all(PaddingApp.p20),
+          padding: const EdgeInsets.all(16),
           width: double.infinity,
+          decoration: BoxDecoration(
+            color: ColorsApp.bgBlack, // VSCode dark background
+            borderRadius: BorderRadius.circular(12),
+          ),
           child: Stack(
             children: [
-              Text(content, textAlign: TextAlign.start),
+              HighlightView(
+                content,
+                language: 'dart', // or 'json', 'yaml', v.v.
+                theme: vs2015Theme,
+                padding: const EdgeInsets.all(12),
+                textStyle: const TextStyle(
+                  fontFamily: 'FiraCode',
+                  fontSize: 14,
+                  height: 1.4,
+                ),
+              ),
               _renderClipBoard(context),
             ],
           ),
