@@ -5,7 +5,7 @@ import 'package:flutter_custom_widget_docs/widgets/animation/shake_container.dar
 import 'package:flutter_custom_widget_docs/widgets/animation/shake_container.doc_widget.dart';
 import 'package:flutter_custom_widget_docs/widgets/buttons/fill_button.dart';
 
-import '../../preview/bio_preview.dart';
+import '../../preview/preview_screen.dart';
 
 final shakeContainer = ElementPreview(
   document: ShakeContainerDocWidget(),
