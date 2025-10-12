@@ -1,4 +1,4 @@
-name: Test, Analyze, Build and Deploy Flutter Web to Firebase Hosting
+name: Build and Deploy Flutter Web to Firebase Hosting
 
 on:
   push:
