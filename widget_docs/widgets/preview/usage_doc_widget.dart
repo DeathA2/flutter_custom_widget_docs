@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_custom_widget_docs/rsc/colors/color_manager.dart';
 import 'package:flutter_custom_widget_docs/rsc/images/image_manager.dart';
-import 'package:flutter_custom_widget_docs/rsc/strings/string_manager.dart';
 import 'package:flutter_custom_widget_docs/rsc/values/values_manager.dart';
 import 'package:flutter_custom_widget_docs/utils/logger.dart';
 import 'package:flutter_custom_widget_docs/widgets/snackBar/custom_snackbar.dart';
@@ -76,7 +75,7 @@ class UsageDocWidget extends StatelessWidget {
             await Clipboard.setData(ClipboardData(text: content));
             CustomSnackBar.displaySnackBar(
               context: context,
-              message: StringsApp.copyToClipboard,
+              message: "Copy To Clipboard",
               marginBottom: 30,
               imagePath: ImagesApp.icSnackbarSuccess,
               duration: const Duration(milliseconds: 500),
