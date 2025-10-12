@@ -12,7 +12,12 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^1.0.8
-  doc_widget: 0.4.0
+  # doc_widget: 0.4.0
+  doc_widget:
+    git:
+      url: https://github.com/DeathA2/doc_widget_new.git
+      path: packages/doc_widget
+      ref: master
 
   flutter_svg: 2.2.1
   logger: 2.6.2
@@ -27,7 +32,12 @@ dev_dependencies:
   flutter_lints: ^5.0.0
   analyzer: 5.13.0
 
-  doc_widget_builder: 0.4.0
+  # doc_widget_builder: 0.4.0
+  doc_widget_builder:
+    git:
+      url: https://github.com/DeathA2/doc_widget_new.git
+      path: packages/doc_widget_builder
+      ref: master
   build_runner: 2.4.13
 
 

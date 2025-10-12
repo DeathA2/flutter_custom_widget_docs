@@ -30,18 +30,23 @@ class ShakeContainerDocWidget implements Documentation {
           isRequired: true,
           isNamed: true,
           type: 'Widget',
+          description:
+              'The child widget that will be wrapped and animated with a shake effect.',
         ),
         PropertyDoc(
           name: 'shakeOffset',
           isRequired: true,
           isNamed: true,
           type: 'double',
+          description:
+              'The maximum horizontal offset (in pixels) for the shake amplitude.',
         ),
         PropertyDoc(
           name: 'shakeCount',
           isRequired: false,
           isNamed: true,
           type: 'int',
+          description: 'Number of shake oscillations in one animation cycle.',
           defaultValue: '3',
         ),
         PropertyDoc(
@@ -49,6 +54,7 @@ class ShakeContainerDocWidget implements Documentation {
           isRequired: false,
           isNamed: true,
           type: 'Duration',
+          description: 'The total duration of the shake animation.',
           defaultValue: 'const Duration(milliseconds: 400)',
         ),
       ];

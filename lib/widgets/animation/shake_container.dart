@@ -3,11 +3,14 @@ import 'package:doc_widget/doc_widget.dart';
 import 'package:flutter/material.dart';
 
 abstract class AnimationControllerState<T extends StatefulWidget>
-    extends State<T> with SingleTickerProviderStateMixin {
+    extends State<T>
+    with SingleTickerProviderStateMixin {
   AnimationControllerState(this.animationDuration);
   final Duration animationDuration;
-  late final animationController =
-      AnimationController(vsync: this, duration: animationDuration);
+  late final animationController = AnimationController(
+    vsync: this,
+    duration: animationDuration,
+  );
   @override
   void dispose() {
     animationController.dispose();
@@ -24,9 +27,17 @@ class ShakeContainer extends StatefulWidget {
     this.shakeCount = 3,
     this.shakeDuration = const Duration(milliseconds: 400),
   }) : super(key: key);
+
+  /// The child widget that will be wrapped and animated with a shake effect.
   final Widget child;
+
+  /// The maximum horizontal offset (in pixels) for the shake amplitude.
   final double shakeOffset;
+
+  /// Number of shake oscillations in one animation cycle.
   final int shakeCount;
+
+  /// The total duration of the shake animation.
   final Duration shakeDuration;
   @override
   ShakeContainerState createState() => ShakeContainerState(shakeDuration);
@@ -62,8 +73,9 @@ class ShakeContainerState extends AnimationControllerState<ShakeContainer> {
       animation: animationController,
       child: widget.child,
       builder: (context, child) {
-        final sineValue =
-            sin(widget.shakeCount * 2 * pi * animationController.value);
+        final sineValue = sin(
+          widget.shakeCount * 2 * pi * animationController.value,
+        );
         return Transform.translate(
           offset: Offset(sineValue * widget.shakeOffset, 0),
           child: child,

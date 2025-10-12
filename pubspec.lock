@@ -180,10 +180,11 @@ packages:
   doc_widget:
     dependency: "direct main"
     description:
-      name: doc_widget
-      sha256: f8a3138deb225b77b44c2e0d366ad350462c70aaec69bcbc24a5f7a3c84bd26d
-      url: "https://pub.dev"
-    source: hosted
+      path: "packages/doc_widget"
+      ref: master
+      resolved-ref: e7447afc05b9a00724a3f1dd497f3b48b9c92941
+      url: "https://github.com/DeathA2/doc_widget_new.git"
+    source: git
     version: "0.4.0"
   doc_widget_annotation:
     dependency: transitive
@@ -196,10 +197,11 @@ packages:
   doc_widget_builder:
     dependency: "direct dev"
     description:
-      name: doc_widget_builder
-      sha256: "3a3623290eec2cf5ce8a841fd8b9fab22d435608403bfda1770ec6b678f4e7dd"
-      url: "https://pub.dev"
-    source: hosted
+      path: "packages/doc_widget_builder"
+      ref: master
+      resolved-ref: e7447afc05b9a00724a3f1dd497f3b48b9c92941
+      url: "https://github.com/DeathA2/doc_widget_new.git"
+    source: git
     version: "0.4.0"
   fake_async:
     dependency: transitive
