@@ -9,7 +9,7 @@ class ColorsApp {
   static Color bgInput = HexColor.fromHex('#F1F5F8');
   static Color bgDisable = HexColor.fromHex('#EAEDF1');
   static Color background = HexColor.fromHex('#E6E6E6');
-  static Color bgBlack = HexColor.fromHex("#FF1E1E1E");
+  static Color bgBlack = HexColor.fromHex("#1E1E1E");
   static Color bgEnhanceVisualBtn = HexColor.fromHex('#F3F3F3');
 
   static Color greyPrimary = HexColor.fromHex('#2F3845');
@@ -66,8 +66,10 @@ class ColorsApp {
 
   static Color cloudDark = HexColor.fromHex('#E8EDF1');
   static Color startGradient = HexColor.fromHex('#2265C6');
-  static Color centerGradient = HexColor.fromHex('#2265C6').withOpacity(0.90);
-  static Color endGradient = HexColor.fromHex('#2265C6').withOpacity(0.70);
+  static Color centerGradient = HexColor.fromHex(
+    '#2265C6',
+  ).withValues(alpha: 0.5);
+  static Color endGradient = HexColor.fromHex('#2265C6').withValues(alpha: 0.7);
 
   static Color blueTop = HexColor.fromHex('#296AC9');
   static Color hightLight = HexColor.fromHex('#444F66');
@@ -130,7 +132,7 @@ extension HexColor on Color {
   static Color fromHex(String hex) {
     hex = hex.replaceAll('#', '');
     if (hex.length == 6) {
-      hex = "FF" + hex; // 8 char with opacity 100%
+      hex = "FF$hex"; // 8 char with opacity 100%
     }
     return Color(int.parse(hex, radix: 16));
   }
