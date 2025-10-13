@@ -5,8 +5,11 @@
 # 🧩 Default project variables
 FLUTTER := flutter
 
+# Use [rm -rf pubspec.lock] for MacOS
 clean:
 	$(FLUTTER) clean
+	del pubspec.lock
+	$(FLUTTER) pub get
 
 get:
 	$(FLUTTER) pub get
