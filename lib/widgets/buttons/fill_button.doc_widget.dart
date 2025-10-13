@@ -93,4 +93,9 @@ class FilledButtonAppDocWidget implements Documentation {
   @override
   String get snippet => '''
 ''';
+
+  @override
+  List<String> get dependencies => [
+        'dep:doc_widget: (url: https://github.com/DeathA2/doc_widget_new.git, path: packages/doc_widget, ref: master)'
+      ];
 }

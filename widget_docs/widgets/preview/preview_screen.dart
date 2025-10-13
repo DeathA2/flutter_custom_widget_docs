@@ -1,4 +1,5 @@
 import 'package:flutter_custom_widget_docs/rsc/values/values_manager.dart';
+import 'package:flutter_custom_widget_docs/utils/strings.dart';
 
 import 'usage_doc_widget.dart';
 import 'package:doc_widget/doc_widget.dart';
@@ -6,6 +7,7 @@ import 'package:flutter/material.dart';
 
 List<WidgetPreview> renderPreview({
   required String title,
+  required List<String> dependencies,
   required String description,
   required String widgetCode,
   required String code,
@@ -24,6 +26,12 @@ List<WidgetPreview> renderPreview({
         ),
       ),
     ),
+  );
+
+  final yamlText = formatDependenciesForPubspec(dependencies);
+
+  final _dependencies = WidgetPreview(
+    widget: UsageDocWidget(title: "Widget's dependencies:", content: yamlText),
   );
 
   final _preview = WidgetPreview(
@@ -50,5 +58,5 @@ List<WidgetPreview> renderPreview({
   ''',
     ),
   );
-  return [_title, _preview, _usage, _sourceCode];
+  return [_title, _preview, _dependencies, _usage, _sourceCode];
 }

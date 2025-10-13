@@ -21,12 +21,12 @@ abstract class AnimationControllerState<T extends StatefulWidget>
 @docWidget
 class ShakeContainer extends StatefulWidget {
   const ShakeContainer({
-    Key? key,
+    super.key,
     required this.child,
     required this.shakeOffset,
     this.shakeCount = 3,
     this.shakeDuration = const Duration(milliseconds: 400),
-  }) : super(key: key);
+  });
 
   /// The child widget that will be wrapped and animated with a shake effect.
   final Widget child;

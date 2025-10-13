@@ -7,14 +7,17 @@ import 'package:flutter_custom_widget_docs/widgets/buttons/fill_button.dart';
 
 import '../../preview/preview_screen.dart';
 
+final docoumentation = ShakeContainerDocWidget();
+
 final shakeContainer = ElementPreview(
-  document: ShakeContainerDocWidget(),
+  document: docoumentation,
   previews: [..._renderShakeContainerPreview()],
 );
 
 List<WidgetPreview> _renderShakeContainerPreview() {
   return renderPreview(
     title: 'Shake Container',
+    dependencies: docoumentation.dependencies,
     description:
         'You want more attention when something wrong ? Shake Container will help you emphasize your mistake anytime when you confirm wrong filler',
     widgetCode: '''
