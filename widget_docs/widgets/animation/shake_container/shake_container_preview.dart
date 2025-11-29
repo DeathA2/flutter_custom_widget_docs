@@ -5,6 +5,7 @@ import 'package:flutter_custom_widget_docs/widgets/animation/shake_container.dar
 import 'package:flutter_custom_widget_docs/widgets/animation/shake_container.doc_widget.dart';
 import 'package:flutter_custom_widget_docs/widgets/buttons/fill_button.dart';
 
+import '../../preview/device_frame_switcher.dart';
 import '../../preview/preview_screen.dart';
 
 final docoumentation = ShakeContainerDocWidget();
@@ -127,30 +128,34 @@ Builder(builder: (context) {
 }
 
 Widget _renderShakeContainer() {
-  return Builder(
-    builder: (context) {
-      final shakeKey = GlobalKey<ShakeContainerState>();
-      return Column(
-        children: [
-          FilledButtonApp(
-            label: "Click here to shake",
-            onPressed: () {
-              shakeKey.currentState?.shake();
-            },
-          ),
-          ShakeContainer(
-            key: shakeKey,
-            shakeDuration: const Duration(milliseconds: 600),
-            shakeCount: 3,
-            shakeOffset: 10,
-            child: Container(
-              height: 40,
-              width: 40,
-              color: ColorsApp.redGradient,
+  return DeviceFrameSwitcher(
+    child: Builder(
+      builder: (context) {
+        final shakeKey = GlobalKey<ShakeContainerState>();
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            FilledButtonApp(
+              label: "Click here to shake",
+              onPressed: () {
+                shakeKey.currentState?.shake();
+              },
             ),
-          ),
-        ],
-      );
-    },
+            ShakeContainer(
+              key: shakeKey,
+              shakeDuration: const Duration(milliseconds: 600),
+              shakeCount: 3,
+              shakeOffset: 10,
+              child: Container(
+                height: 40,
+                width: 40,
+                color: ColorsApp.redGradient,
+              ),
+            ),
+          ],
+        );
+      },
+    ),
   );
 }

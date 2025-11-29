@@ -33,7 +33,7 @@ class UsageDocWidget extends StatelessWidget {
             children: [
               HighlightView(
                 content,
-                language: 'dart', // or 'json', 'yaml', v.v.
+                language: 'dart',
                 theme: vs2015Theme,
                 padding: const EdgeInsets.all(12),
                 textStyle: const TextStyle(
@@ -73,6 +73,7 @@ class UsageDocWidget extends StatelessWidget {
         onPressed: () async {
           try {
             await Clipboard.setData(ClipboardData(text: content));
+            if (!context.mounted) return;
             CustomSnackBar.displaySnackBar(
               context: context,
               message: "Copy To Clipboard",

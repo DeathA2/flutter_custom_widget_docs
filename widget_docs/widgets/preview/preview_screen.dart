@@ -35,7 +35,7 @@ List<WidgetPreview> renderPreview({
   );
 
   final _preview = WidgetPreview(
-    widget: widget,
+    widget: SizedBox.shrink(),
     description: '''
   $description
     ''',
@@ -51,11 +51,19 @@ List<WidgetPreview> renderPreview({
   );
 
   final _usage = WidgetPreview(
-    widget: UsageDocWidget(
-      title: "use:",
-      content: '''
-   $code
-  ''',
+    widget: Row(
+      children: [
+        Expanded(
+          child: UsageDocWidget(
+            title: "use:",
+            content: '''
+           $code
+          ''',
+          ),
+        ),
+        SizedBox(width: MarginApp.m8),
+        widget,
+      ],
     ),
   );
   return [_title, _preview, _dependencies, _usage, _sourceCode];
