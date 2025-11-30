@@ -17,9 +17,6 @@ import 'package:flutter_svg/svg.dart';
 
 enum BarType { bodyTemperature, spO2 }
 
-// Bubble Sample: https://www.figma.com/file/F4JVO6al4f2wMJ2kMoALR1/Biocare-App---In-Dev?node-id=10816%3A84743
-// Color Bar Sample: https://www.figma.com/file/F4JVO6al4f2wMJ2kMoALR1/Biocare-App---In-Dev?node-id=10816%3A84698
-
 @docWidget
 class BubbleColorBar extends StatelessWidget {
   /// Current [value] of Description Bar

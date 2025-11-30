@@ -43,7 +43,6 @@ import 'package:another_xlider/models/hatch_mark_label.dart';
 import 'package:another_xlider/models/tooltip/tooltip.dart';
 import 'package:another_xlider/models/tooltip/tooltip_position_offset.dart';
 import 'package:another_xlider/models/trackbar.dart';
-import 'package:doc_widget/doc_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_widget_docs/gen/assets.gen.dart';
 import 'package:flutter_custom_widget_docs/rsc/colors/color_manager.dart';
@@ -55,10 +54,6 @@ import 'package:flutter_svg/svg.dart';
 
 enum BarType { bodyTemperature, spO2 }
 
-// Bubble Sample: https://www.figma.com/file/F4JVO6al4f2wMJ2kMoALR1/Biocare-App---In-Dev?node-id=10816%3A84743
-// Color Bar Sample: https://www.figma.com/file/F4JVO6al4f2wMJ2kMoALR1/Biocare-App---In-Dev?node-id=10816%3A84698
-
-@docWidget
 class BubbleColorBar extends StatelessWidget {
   /// Current [value] of Description Bar
   final double? value;

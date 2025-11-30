@@ -31,7 +31,13 @@ List<WidgetPreview> renderPreview({
   final yamlText = formatDependenciesForPubspec(dependencies);
 
   final _dependencies = WidgetPreview(
-    widget: UsageDocWidget(title: "Widget's dependencies:", content: yamlText),
+    widget:
+        yamlText.isEmpty
+            ? SizedBox.shrink()
+            : UsageDocWidget(
+              title: "Widget's dependencies:",
+              content: yamlText,
+            ),
   );
 
   final _preview = WidgetPreview(

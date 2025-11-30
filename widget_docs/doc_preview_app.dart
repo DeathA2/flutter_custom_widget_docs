@@ -203,33 +203,13 @@ class _DocPreviewAppState extends State<DocPreviewApp> {
     if (url == null || url.isEmpty) return;
     final uri = Uri.tryParse(url);
     if (uri == null) return;
-    final messenger = ScaffoldMessenger.of(context);
     try {
-      final launched = await launchUrl(
-        uri,
-        mode: LaunchMode.externalApplication,
-      );
-      if (!launched) {
-        // fallback: copy to clipboard
-        await Clipboard.setData(ClipboardData(text: url));
-        if (!mounted) return;
-        messenger.showSnackBar(
-          const SnackBar(
-            content: Text('Link copied to clipboard'),
-            duration: Duration(milliseconds: 800),
-          ),
-        );
-      }
+      await launchUrl(uri, mode: LaunchMode.externalApplication);
     } catch (e) {
-      // fallback: copy to clipboard
-      await Clipboard.setData(ClipboardData(text: url));
-      if (!mounted) return;
-      messenger.showSnackBar(
-        const SnackBar(
-          content: Text('Link copied to clipboard'),
-          duration: Duration(milliseconds: 800),
-        ),
-      );
+      if (!context.mounted) return;
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Could not open URL: $url')));
     }
   }
 

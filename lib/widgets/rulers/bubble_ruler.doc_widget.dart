@@ -79,8 +79,8 @@ class BubbleColorBarDocWidget implements Documentation {
 
   @override
   List<String> get dependencies => [
-        'dep:another_xlider: (url: https://pub.dev)',
+        'dep:another_xlider: 3.0.2',
         'dep:doc_widget: (url: https://github.com/DeathA2/doc_widget_new.git, path: packages/doc_widget, ref: master)',
-        'dep:flutter_svg: (url: https://pub.dev)'
+        'dep:flutter_svg: 2.2.1'
       ];
 }

@@ -25,12 +25,8 @@ class $AssetsSvgGen {
   String get icSnackbarSuccess => 'assets/svg/ic_snackbar_success.svg';
 
   /// List of all assets
-  List<String> get values => [
-    githubLogo,
-    icCopy,
-    icDescriptionStroke,
-    icSnackbarSuccess,
-  ];
+  List<String> get values =>
+      [githubLogo, icCopy, icDescriptionStroke, icSnackbarSuccess];
 }
 
 class Assets {
@@ -97,8 +93,15 @@ class AssetGenImage {
     );
   }
 
-  ImageProvider provider({AssetBundle? bundle, String? package}) {
-    return AssetImage(_assetName, bundle: bundle, package: package);
+  ImageProvider provider({
+    AssetBundle? bundle,
+    String? package,
+  }) {
+    return AssetImage(
+      _assetName,
+      bundle: bundle,
+      package: package,
+    );
   }
 
   String get path => _assetName;

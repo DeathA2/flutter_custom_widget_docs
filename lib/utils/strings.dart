@@ -1,9 +1,9 @@
 String formatDependenciesForPubspec(List<String> deps) {
-  print('Formatting dependencies for pubspec from: $deps');
   final normalDeps = <String>[];
   final devDeps = <String>[];
 
   for (final dep in deps) {
+    if (dep.trim().contains("doc_widget")) continue;
     final isDev = dep.startsWith('dev:');
     final parts = dep.split(':');
     if (parts.length < 3) continue;
