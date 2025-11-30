@@ -9,6 +9,17 @@
 
 import 'package:flutter/widgets.dart';
 
+class $AssetsImagesGen {
+  const $AssetsImagesGen();
+
+  /// File path: assets/images/blood_pressure_7_factors.jpg
+  AssetGenImage get bloodPressure7Factors =>
+      const AssetGenImage('assets/images/blood_pressure_7_factors.jpg');
+
+  /// List of all assets
+  List<AssetGenImage> get values => [bloodPressure7Factors];
+}
+
 class $AssetsSvgGen {
   const $AssetsSvgGen();
 
@@ -32,6 +43,7 @@ class $AssetsSvgGen {
 class Assets {
   Assets._();
 
+  static const $AssetsImagesGen images = $AssetsImagesGen();
   static const $AssetsSvgGen svg = $AssetsSvgGen();
 }
 

@@ -5,8 +5,6 @@ import 'package:doc_widget/src/widgets/app_bar.dart';
 import 'package:doc_widget/src/widgets/drawer.dart';
 import 'package:doc_widget/src/widgets/item.dart';
 import 'package:flutter/material.dart';
-// no platform-specific dart:html import; url_launcher handles web and native
-import 'package:flutter/services.dart';
 import 'dart:async';
 
 import 'package:flutter_custom_widget_docs/network/implement/github_repository_impl.dart';
