@@ -31,7 +31,7 @@ class _DeviceFrameSwitcherState extends State<DeviceFrameSwitcher> {
       case PreviewDevice.ios:
         return Devices.ios.iPhone16ProMax;
       case PreviewDevice.android:
-        return Devices.android.samsungGalaxyS25;
+        return Devices.android.samsungGalaxyS20;
       case PreviewDevice.web:
         return Devices.macOS.macBookPro;
     }
@@ -57,18 +57,39 @@ class _DeviceFrameSwitcherState extends State<DeviceFrameSwitcher> {
           ),
         ),
 
-        Center(
-          child: SizedBox(
-            width: 240,
-            height: 540,
-            child: DeviceFrame(
-              device: device,
-              screen: Scaffold(
-                body: SafeArea(
-                  child: Material(
-                    color: Colors.white,
-                    child: Center(child: widget.child),
-                  ),
+        SizedBox(
+          width: 240,
+          height: 540,
+          child: DeviceFrame(
+            device: device,
+            screen: Scaffold(
+              backgroundColor: Colors.white,
+              body: Center(
+                // Use LayoutBuilder to know the available screen area inside the
+                // device frame. We try to keep a stable target size for the
+                // preview content (so it doesn't get cut off when switching
+                // devices) and only shrink it when the device's screen is too
+                // small.
+                child: LayoutBuilder(
+                  builder: (context, constraints) {
+                    const targetWidth = 220.0;
+                    const targetHeight = 480.0;
+
+                    final width =
+                        targetWidth <= constraints.maxWidth
+                            ? targetWidth
+                            : constraints.maxWidth;
+                    final height =
+                        targetHeight <= constraints.maxHeight
+                            ? targetHeight
+                            : constraints.maxHeight;
+
+                    return SizedBox(
+                      width: width,
+                      height: height,
+                      child: Center(child: widget.child),
+                    );
+                  },
                 ),
               ),
             ),

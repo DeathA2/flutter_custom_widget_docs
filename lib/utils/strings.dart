@@ -1,4 +1,5 @@
 String formatDependenciesForPubspec(List<String> deps) {
+  print('Formatting dependencies for pubspec from: $deps');
   final normalDeps = <String>[];
   final devDeps = <String>[];
 

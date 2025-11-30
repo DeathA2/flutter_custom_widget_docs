@@ -18,11 +18,19 @@ class $AssetsSvgGen {
   /// File path: assets/svg/ic_copy.svg
   String get icCopy => 'assets/svg/ic_copy.svg';
 
+  /// File path: assets/svg/ic_description_stroke.svg
+  String get icDescriptionStroke => 'assets/svg/ic_description_stroke.svg';
+
   /// File path: assets/svg/ic_snackbar_success.svg
   String get icSnackbarSuccess => 'assets/svg/ic_snackbar_success.svg';
 
   /// List of all assets
-  List<String> get values => [githubLogo, icCopy, icSnackbarSuccess];
+  List<String> get values => [
+    githubLogo,
+    icCopy,
+    icDescriptionStroke,
+    icSnackbarSuccess,
+  ];
 }
 
 class Assets {
@@ -89,15 +97,8 @@ class AssetGenImage {
     );
   }
 
-  ImageProvider provider({
-    AssetBundle? bundle,
-    String? package,
-  }) {
-    return AssetImage(
-      _assetName,
-      bundle: bundle,
-      package: package,
-    );
+  ImageProvider provider({AssetBundle? bundle, String? package}) {
+    return AssetImage(_assetName, bundle: bundle, package: package);
   }
 
   String get path => _assetName;

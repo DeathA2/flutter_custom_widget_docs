@@ -45,19 +45,21 @@ List<WidgetPreview> renderPreview({
     widget: UsageDocWidget(
       title: "Widget's source code:",
       content: '''
-   $widgetCode
+    $widgetCode
   ''',
     ),
   );
 
   final _usage = WidgetPreview(
     widget: Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Expanded(
           child: UsageDocWidget(
             title: "use:",
             content: '''
-           $code
+            $code
           ''',
           ),
         ),

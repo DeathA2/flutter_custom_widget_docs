@@ -31,6 +31,9 @@ dependencies:
   device_frame: ^1.4.0
   url_launcher: ^6.1.10
 
+  # Widget
+  another_xlider: ^3.0.2
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
