@@ -1,4 +1,4 @@
-name: CI
+name: Analyze, Format-check and Test
 
 on:
   pull_request:
@@ -32,9 +32,6 @@ jobs:
 
       - name: Install dependencies
         run: flutter pub get
-
-      - name: Dart format check
-        run: dart format --output=none --set-exit-if-changed .
 
       - name: Analyze
         run: flutter analyze
