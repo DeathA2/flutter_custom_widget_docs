@@ -39,6 +39,9 @@ class CustomSnackBar {
             backgroundColor: ColorsApp.greyPrimary,
             duration: duration,
             // wrap content with "WillPopScope" to remove snackbar when the user presses back button (Android)
+            // WillPopScope is deprecated on newer Flutter versions; ignore the deprecation here until
+            // a full PopScope migration is implemented.
+            // ignore: deprecated_member_use
             content: WillPopScope(
               onWillPop: () async {
                 ScaffoldMessenger.of(context).hideCurrentSnackBar();

@@ -5,12 +5,20 @@ import 'package:flutter/material.dart';
 abstract class AnimationControllerState<T extends StatefulWidget>
     extends State<T>
     with SingleTickerProviderStateMixin {
-  AnimationControllerState(this.animationDuration);
-  final Duration animationDuration;
-  late final animationController = AnimationController(
-    vsync: this,
-    duration: animationDuration,
-  );
+  /// Subclasses must provide the animation duration via the [animationDuration] getter.
+  Duration get animationDuration;
+
+  late final AnimationController animationController;
+
+  @override
+  void initState() {
+    super.initState();
+    animationController = AnimationController(
+      vsync: this,
+      duration: animationDuration,
+    );
+  }
+
   @override
   void dispose() {
     animationController.dispose();
@@ -40,11 +48,15 @@ class ShakeContainer extends StatefulWidget {
   /// The total duration of the shake animation.
   final Duration shakeDuration;
   @override
-  ShakeContainerState createState() => ShakeContainerState(shakeDuration);
+  ShakeContainerState createState() => ShakeContainerState();
 }
 
 class ShakeContainerState extends AnimationControllerState<ShakeContainer> {
-  ShakeContainerState(Duration duration) : super(duration);
+  @override
+  Duration get animationDuration => widget.shakeDuration;
+
+  ShakeContainerState();
+
   @override
   void initState() {
     super.initState();

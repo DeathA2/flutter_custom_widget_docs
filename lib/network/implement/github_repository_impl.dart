@@ -26,7 +26,7 @@ class GithubRepositoryImpl extends GithubRepository {
   @override
   Future<XResult<RepoInformationModel>> getRepoInformation() {
     return executeApi(
-      func: () => DioServices.dio.get(APIEndpoint.getContributors),
+      func: () => DioServices.dio.get(APIEndpoint.getRepoInfo),
       onSuccess:
           (response) =>
               XResult.success(RepoInformationModel.fromJson(response.data)),
