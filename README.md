@@ -74,7 +74,59 @@ This repository contains both the app/library code and a documentation preview a
 - To add a preview demonstration, create a preview file under `widget_docs/widgets/` and register it so it appears in the preview drawer.
 - The preview app fetches GitHub repo information and contributors to show inside the app drawer (see `lib/network/implement/github_repository_impl.dart`).
 
-> **Note (CI/CD):** This project has continuous deployment configured on the `dev` branch — any change merged into `dev` will be automatically deployed within approximately 5–10 minutes.
+## Adding a widget and showing it in the Web preview
+
+Follow these steps to add a new widget and register it so it appears in the web preview app:
+
+1. Create the widget file under `lib/widget` (for example `lib/widgets/animation/touchable_opacity.dart`). Implement the widget as normal Flutter code. If you use `doc_widget`, annotate with `@docWidget` to enable generator support.
+
+```dart
+// lib/widgets/animation/touchable_opacity.dart
+import 'package:doc_widget/doc_widget.dart';
+import 'package:flutter/material.dart';
+
+@docWidget
+class TouchableOpacity extends StatefulWidget { /* ... */ }
+```
+
+2. Run the generator if your project uses code generation:
+
+```sh
+flutter pub get
+flutter pub run build_runner build --delete-conflicting-outputs
+```
+
+3. Create a preview file under `widget_docs/widgets/` (for example `widget_docs/widgets/animation/touchable_opacity_preview.dart`). Register an `ElementPreview` or use the `renderPreview(...)` helper so the preview shows up in the drawer:
+
+```dart
+// widget_docs/widgets/animation/touchable_opacity_preview.dart
+import 'package:doc_widget/doc_widget.dart';
+import 'package:flutter/material.dart';
+import '../../../lib/widgets/animation/touchable_opacity.dart';
+
+final touchablePreview = ElementPreview(
+	document: /* metadata */,
+	previews: [
+		WidgetPreview(
+			title: 'TouchableOpacity',
+			widget: Builder(builder: (_) => TouchableOpacity(/* ... */)),
+		),
+	],
+);
+```
+
+4. Format, analyze and run the preview locally to verify:
+
+```sh
+flutter run -t widget_docs/doc_widget_main.dart
+```
+
+5. Commit your changes and open a Pull Request targeting the `dev` branch.
+
+Notes:
+- Make sure preview files are placed under `widget_docs/widgets/` so the preview app can discover them.
+- If the generator creates files that must be committed, include them or explain in the PR that reviewers should run codegen.
+- The CI runs format/analyze/tests on PRs; run those locally before creating the PR to avoid CI failures.
 
 ---
 
@@ -180,4 +232,63 @@ Open `widget_docs/doc_preview_app.dart` to run the documentation preview app. Ke
 - `widget_docs/widgets/preview/usage_doc_widget.dart` — selectable, syntax-highlighted code previews
 
 The preview app drawer includes a small repository info area (owner + contributors) and a "Contribute here" link which opens the repository in the browser or via `url_launcher` on native platforms.
+
+---
+
+## Thêm một widget và hiển thị trên Web Preview
+
+Dưới đây là các bước để thêm một widget mới và hiển thị nó trong web preview (những thao tác giống những gì đã thực hiện trong repo):
+
+1. Tạo file widget trong `lib/` (ví dụ `lib/widgets/animation/touchable_opacity.dart`). Viết widget theo chuẩn Flutter. Sử dụng `@docWidget` nếu bạn muốn khai thác `doc_widget` generator.
+
+```dart
+// lib/widgets/animation/touchable_opacity.dart
+import 'package:doc_widget/doc_widget.dart';
+import 'package:flutter/material.dart';
+
+@docWidget
+class TouchableOpacity extends StatefulWidget { /* ... */ }
+```
+
+2. Tạo file preview trong `widget_docs/widgets/` (ví dụ `widget_docs/widgets/animation/touchable_opacity_preview.dart`). Đăng ký một `ElementPreview` hoặc dùng helper `renderPreview(...)` để preview xuất hiện trong drawer.
+
+```dart
+// widget_docs/widgets/animation/touchable_opacity_preview.dart
+import 'package:doc_widget/doc_widget.dart';
+import 'package:flutter/material.dart';
+import '../../../lib/widgets/animation/touchable_opacity.dart';
+
+final touchablePreview = ElementPreview(
+	document: /* metadata */,
+	previews: [
+		WidgetPreview(
+			title: 'TouchableOpacity',
+			widget: Builder(builder: (_) => TouchableOpacity(/* ... */)),
+		),
+	],
+);
+```
+
+3. Chạy generator (nếu project sử dụng codegen):
+
+```sh
+flutter pub get
+flutter pub run build_runner build --delete-conflicting-outputs
+```
+
+4. Kiểm tra, định dạng và chạy preview locally:
+
+```sh
+dart format .
+flutter analyze
+flutter run -t widget_docs/doc_widget_main.dart
+```
+
+5. Commit, push và mở PR vào nhánh `dev`.
+
+Ghi chú ngắn:
+- Đảm bảo file preview nằm trong thư mục mà preview app scan (thường là `widget_docs/widgets/`).
+- Nếu generator tạo các file cần commit, nhớ commit các file generated theo quy ước dự án.
+- Nếu CI của repo check format/analyze/tests, chạy những lệnh kiểm tra trước khi tạo PR để tránh CI fail.
+
 
