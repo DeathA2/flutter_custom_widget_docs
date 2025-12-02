@@ -1,0 +1,94 @@
+name: flutter_custom_widget_docs
+description: "A new Flutter project."
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.7.2
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+
+  intl: ^0.20.2
+  cupertino_icons: ^1.0.8
+  # doc_widget: 0.4.0
+  doc_widget:
+    git:
+      url: https://github.com/DeathA2/doc_widget_new.git
+      path: packages/doc_widget
+      ref: master
+
+  flutter_svg: 2.2.1
+  logger: 2.6.2
+  firebase_core: ^4.1.1
+  highlight: ^0.7.0
+  flutter_highlight: ^0.7.0
+  dio: ^5.9.0
+  device_frame: ^1.4.0
+  url_launcher: ^6.1.10
+
+  # Widget
+  another_xlider: ^3.0.2
+  modal_bottom_sheet: ^3.0.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^5.0.0
+  analyzer: 5.13.0
+  flutter_gen_runner: 5.3.2
+
+  # doc_widget_builder: 0.4.0
+  doc_widget_builder:
+    git:
+      url: https://github.com/DeathA2/doc_widget_new.git
+      path: packages/doc_widget_builder
+      ref: master
+  build_runner: 2.4.13
+
+dependency_overrides:
+  dart_style: ^2.2.4
+
+# The following section is specific to Flutter packages.
+flutter:
+  uses-material-design: true
+  generate: true
+  # To add assets to your application, add an assets section, like this:
+  assets:
+    # - assets/json/
+    - assets/images/
+    # - assets/jpg/
+    - assets/svg/
+
+  fonts:
+    - family: CeraPro
+      fonts:
+        - asset: assets/fonts/CeraPro-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/CeraPro-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/CeraPro-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/CeraPro-Light.ttf
+          weight: 400
+    - family: Mulish
+      fonts:
+        - asset: assets/fonts/Mulish-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Mulish-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Mulish-Regular.ttf
+          weight: 400
+    - family: Nunito
+      fonts:
+        - asset: assets/fonts/Nunito-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Nunito-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Nunito-Regular.ttf
+          weight: 400
