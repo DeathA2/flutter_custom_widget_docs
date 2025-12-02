@@ -64,30 +64,21 @@ class _DeviceFrameSwitcherState extends State<DeviceFrameSwitcher> {
             device: device,
             screen: Scaffold(
               backgroundColor: Colors.white,
-              body: Center(
-                // Use LayoutBuilder to know the available screen area inside the
-                // device frame. We try to keep a stable target size for the
-                // preview content (so it doesn't get cut off when switching
-                // devices) and only shrink it when the device's screen is too
-                // small.
-                child: LayoutBuilder(
-                  builder: (context, constraints) {
-                    const targetWidth = 220.0;
-                    const targetHeight = 480.0;
-
-                    final width =
-                        targetWidth <= constraints.maxWidth
-                            ? targetWidth
-                            : constraints.maxWidth;
-                    final height =
-                        targetHeight <= constraints.maxHeight
-                            ? targetHeight
-                            : constraints.maxHeight;
-
-                    return SizedBox(
-                      width: width,
-                      height: height,
-                      child: Center(child: widget.child),
+              body: SizedBox.expand(
+                child: Navigator(
+                  onGenerateRoute: (settings) {
+                    return MaterialPageRoute(
+                      builder: (context) {
+                        return FittedBox(
+                          fit: BoxFit.contain,
+                          child: Container(
+                            padding: const EdgeInsets.all(16.0),
+                            width: device.screenSize.width,
+                            height: device.screenSize.height,
+                            child: Center(child: widget.child),
+                          ),
+                        );
+                      },
                     );
                   },
                 ),

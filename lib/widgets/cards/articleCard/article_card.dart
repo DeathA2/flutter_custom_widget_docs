@@ -107,8 +107,8 @@ class ArticleCard extends StatelessWidget {
                 builder:
                     (context) => DetailArticleCard(articleType: articleType),
                 barrierColor: Colors.black.withValues(alpha: OpacityApp.opa80),
-                enableDrag: false,
-                isDismissible: false,
+                enableDrag: true,
+                isDismissible: true,
                 topRadius: const Radius.circular(BorderRadiusApp.r16),
               ),
           splashColor: ColorsApp.white.withValues(alpha: OpacityApp.opa20),
