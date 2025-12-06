@@ -230,7 +230,7 @@ packages:
     description:
       path: "packages/doc_widget"
       ref: master
-      resolved-ref: "8ab5fce684e7dd298e17d31f659f83c4e92938dc"
+      resolved-ref: "1c5e4b9d2d3d40ffd4d250ca7346218aabbafffa"
       url: "https://github.com/DeathA2/doc_widget_new.git"
     source: git
     version: "0.4.0"
@@ -247,7 +247,7 @@ packages:
     description:
       path: "packages/doc_widget_builder"
       ref: master
-      resolved-ref: "8ab5fce684e7dd298e17d31f659f83c4e92938dc"
+      resolved-ref: "1c5e4b9d2d3d40ffd4d250ca7346218aabbafffa"
       url: "https://github.com/DeathA2/doc_widget_new.git"
     source: git
     version: "0.4.0"
