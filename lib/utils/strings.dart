@@ -57,3 +57,7 @@ String _formatEntry(String name, String value) {
     return '$name: $value';
   }
 }
+
+bool isNullOrEmpty(String? value) => value == null || value.isEmpty;
+
+bool isNotNullOrEmpty(String? value) => !isNullOrEmpty(value);

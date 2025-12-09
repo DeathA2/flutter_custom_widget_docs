@@ -74,5 +74,6 @@ List<WidgetPreview> renderPreview({
       ],
     ),
   );
+  if (widgetCode.isEmpty) return [_title, _preview, _dependencies, _usage];
   return [_title, _preview, _dependencies, _usage, _sourceCode];
 }

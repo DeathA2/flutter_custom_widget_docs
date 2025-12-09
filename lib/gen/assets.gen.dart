@@ -23,8 +23,20 @@ class $AssetsImagesGen {
 class $AssetsSvgGen {
   const $AssetsSvgGen();
 
+  /// File path: assets/svg/device.svg
+  String get device => 'assets/svg/device.svg';
+
+  /// File path: assets/svg/device_stroke.svg
+  String get deviceStroke => 'assets/svg/device_stroke.svg';
+
   /// File path: assets/svg/github_logo.svg
   String get githubLogo => 'assets/svg/github_logo.svg';
+
+  /// File path: assets/svg/home.svg
+  String get home => 'assets/svg/home.svg';
+
+  /// File path: assets/svg/home_stroke.svg
+  String get homeStroke => 'assets/svg/home_stroke.svg';
 
   /// File path: assets/svg/ic_copy.svg
   String get icCopy => 'assets/svg/ic_copy.svg';
@@ -32,12 +44,44 @@ class $AssetsSvgGen {
   /// File path: assets/svg/ic_description_stroke.svg
   String get icDescriptionStroke => 'assets/svg/ic_description_stroke.svg';
 
+  /// File path: assets/svg/ic_services.svg
+  String get icServices => 'assets/svg/ic_services.svg';
+
+  /// File path: assets/svg/ic_services_stroke.svg
+  String get icServicesStroke => 'assets/svg/ic_services_stroke.svg';
+
   /// File path: assets/svg/ic_snackbar_success.svg
   String get icSnackbarSuccess => 'assets/svg/ic_snackbar_success.svg';
 
+  /// File path: assets/svg/ic_square_checkbox.svg
+  String get icSquareCheckbox => 'assets/svg/ic_square_checkbox.svg';
+
+  /// File path: assets/svg/ic_square_checkbox_fill.svg
+  String get icSquareCheckboxFill => 'assets/svg/ic_square_checkbox_fill.svg';
+
+  /// File path: assets/svg/user.svg
+  String get user => 'assets/svg/user.svg';
+
+  /// File path: assets/svg/user_stroke.svg
+  String get userStroke => 'assets/svg/user_stroke.svg';
+
   /// List of all assets
-  List<String> get values =>
-      [githubLogo, icCopy, icDescriptionStroke, icSnackbarSuccess];
+  List<String> get values => [
+        device,
+        deviceStroke,
+        githubLogo,
+        home,
+        homeStroke,
+        icCopy,
+        icDescriptionStroke,
+        icServices,
+        icServicesStroke,
+        icSnackbarSuccess,
+        icSquareCheckbox,
+        icSquareCheckboxFill,
+        user,
+        userStroke
+      ];
 }
 
 class Assets {
