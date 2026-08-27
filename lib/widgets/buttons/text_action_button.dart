@@ -1,0 +1,51 @@
+import 'package:doc_widget/doc_widget.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_custom_widget_docs/rsc/colors/custom_color_manager.dart';
+import 'package:flutter_custom_widget_docs/widgets/animation/touchable_opacity.dart';
+
+/// Text button whose tap target stays at least 48pt even when the label is short.
+@docWidget
+class TextActionButton extends StatelessWidget {
+  const TextActionButton({
+    required this.label,
+    required this.onTap,
+    this.color = CustomColors.brand,
+    this.icon,
+    super.key,
+  });
+
+  final String label;
+  final VoidCallback? onTap;
+  final Color color;
+  final IconData? icon;
+
+  @override
+  Widget build(BuildContext context) {
+    return TouchableOpacity.scale(
+      isButton: true,
+      semanticsLabel: label,
+      minSize: 48,
+      onTap: onTap,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            if (icon != null) ...<Widget>[
+              Icon(icon, size: 18, color: color),
+              const SizedBox(width: 6),
+            ],
+            Text(
+              label,
+              style: TextStyle(
+                color: color,
+                fontWeight: FontWeight.w700,
+                fontSize: 15,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
