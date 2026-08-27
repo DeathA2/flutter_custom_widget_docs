@@ -24,16 +24,13 @@ final _defaultButtonPreview = renderPreview(
     IconOutlinedButton(
         icon: ImagesApp.icArrowBackAndroid,
         onPressed: () {
-          print("onClick");
         },
       )
     ''',
   widget: DeviceFrameSwitcher(
     child: IconOutlinedButton(
       icon: ImagesApp.icSnackbarSuccess,
-      onPressed: () {
-        print("onClick");
-      },
+      onPressed: () {},
     ),
   ),
 );
@@ -48,7 +45,6 @@ final _customButtonPreview = renderPreview(
     IconOutlinedButton(
         icon: ImagesApp.icArrowBackAndroid,
         onPressed: () {
-          print("onClick");
         },
       )
     ''',
@@ -56,9 +52,7 @@ final _customButtonPreview = renderPreview(
     child: IconOutlinedButton(
       icon: ImagesApp.logoGithub,
       bgColor: Colors.cyan,
-      onPressed: () {
-        print("onClick");
-      },
+      onPressed: () {},
     ),
   ),
 );

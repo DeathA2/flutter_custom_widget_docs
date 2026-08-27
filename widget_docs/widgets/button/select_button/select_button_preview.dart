@@ -22,7 +22,6 @@ final _defaultButtonPreview = renderPreview(
     SelectButton(
         label: 'Section Button App',
         onPressed: () {
-          print("onClick");
         },
         isFocus: true,
       )
@@ -30,9 +29,7 @@ final _defaultButtonPreview = renderPreview(
   widget: DeviceFrameSwitcher(
     child: SelectButton(
       label: 'Section Button App',
-      onPressed: () {
-        print("onClick");
-      },
+      onPressed: () {},
       isFocus: true,
     ),
   ),

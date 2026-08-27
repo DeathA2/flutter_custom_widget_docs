@@ -27,17 +27,11 @@ final _defaultButtonPreview = renderPreview(
     OutlinedButtonApp(
         label: 'Outlined Button App',
         onPressed: () {
-          print("onClick");
         },
       )
     ''',
   widget: DeviceFrameSwitcher(
-    child: OutlinedButtonApp(
-      label: 'Outlined Button App',
-      onPressed: () {
-        print("onClick");
-      },
-    ),
+    child: OutlinedButtonApp(label: 'Outlined Button App', onPressed: () {}),
   ),
 );
 
@@ -51,7 +45,6 @@ final _customButtonPreview = renderPreview(
     OutlinedButtonApp(
         label: 'Custom Outline Button',
         onPressed: () {
-          print("onClick");
         },
         colorText: Colors.amber,
         borderWidth: 2,
@@ -63,9 +56,7 @@ final _customButtonPreview = renderPreview(
   widget: DeviceFrameSwitcher(
     child: OutlinedButtonApp(
       label: 'Custom Outline Button',
-      onPressed: () {
-        print("onClick");
-      },
+      onPressed: () {},
       colorText: Colors.amber,
       borderWidth: 2,
       borderColor: Colors.blue,
@@ -84,7 +75,6 @@ final _loadingButtonPreview = renderPreview(
     OutlinedButtonApp(
         label: 'Loading Button App',
         onPressed: () {
-          print("onClick");
         },
         isLoading: true,
       ),
@@ -93,9 +83,7 @@ final _loadingButtonPreview = renderPreview(
   widget: DeviceFrameSwitcher(
     child: OutlinedButtonApp(
       label: 'Loading Button App',
-      onPressed: () {
-        print("onClick");
-      },
+      onPressed: () {},
       isLoading: true,
     ),
   ),

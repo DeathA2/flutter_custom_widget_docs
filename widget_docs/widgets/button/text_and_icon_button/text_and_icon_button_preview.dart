@@ -24,7 +24,6 @@ final _defaultButtonPreview = renderPreview(
     TextAndIconButton(
         text: 'Text And Icon Button App',
         onPressed: () {
-          print("onClick");
         },
         leftIcon: ImagesApp.icAddNote,
         leftIconColor: ColorsApp.blueMainChart,
@@ -33,10 +32,8 @@ final _defaultButtonPreview = renderPreview(
     ''',
   widget: DeviceFrameSwitcher(
     child: TextAndIconButton(
-      text: 'Default Button with Text And left Icon.',
-      onPressed: () {
-        print("onClick");
-      },
+      text: 'Default with left icon',
+      onPressed: () {},
       leftIcon: ImagesApp.icCopy,
       leftIconColor: ColorsApp.blueMainChart,
       isWrapContent: true,
@@ -56,7 +53,6 @@ final _customButtonPreview = renderPreview(
           text: 'Text And Icon Button App',
           textColor: ColorsApp.bluePrimary,
           onPressed: () {
-            print("onClick");
           },
           leftIcon: ImagesApp.icAddNote,
           leftIconColor: ColorsApp.error,
@@ -70,9 +66,7 @@ final _customButtonPreview = renderPreview(
     child: TextAndIconButton(
       text: 'Text And Icon Button App',
       textColor: ColorsApp.bluePrimary,
-      onPressed: () {
-        print("onClick");
-      },
+      onPressed: () {},
       leftIcon: ImagesApp.icCopy,
       leftIconColor: ColorsApp.error,
       borderColor: ColorsApp.attention,
