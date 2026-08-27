@@ -18,9 +18,9 @@ A documentation preview app and component catalog that demonstrates reusable cus
 
 ## Prerequisites
 
-- **Flutter:** `>=3.35.3` (recommended tested: `3.35.6`)
-- **Dart:** `3.9.2`
-- Project SDK constraint (see `pubspec.yaml`): `sdk: ^3.7.2`
+- **Flutter:** `>=3.44.6` (recommended tested: `3.44.6`)
+- **Dart:** `3.12.2`
+- Project SDK constraint (see `pubspec.yaml`): `sdk: ^3.12.2`
 
 ---
 
