@@ -67,7 +67,7 @@ class _DeviceFrameSwitcherState extends State<DeviceFrameSwitcher> {
               body: SizedBox.expand(
                 child: Navigator(
                   onGenerateRoute: (settings) {
-                    return MaterialPageRoute(
+                    return _PreviewRootRoute(
                       builder: (context) {
                         return FittedBox(
                           fit: BoxFit.contain,
@@ -95,12 +95,37 @@ class _DeviceFrameSwitcherState extends State<DeviceFrameSwitcher> {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         elevation: selected ? 4 : 0,
-        backgroundColor:
-            selected ? Theme.of(context).colorScheme.primary : Colors.grey[300],
+        backgroundColor: selected
+            ? Theme.of(context).colorScheme.primary
+            : Colors.grey[300],
         foregroundColor: selected ? Colors.white : Colors.black87,
       ),
       onPressed: () => setState(() => _selected = deviceType),
       child: Text(label),
     );
+  }
+}
+
+/// The route holding a preview inside the device frame, which refuses to be
+/// popped away.
+///
+/// Previews demonstrate real widgets, and a real widget may well call
+/// `Navigator.pop` — [ReactionBar] returns the chosen emoji that way. Rendered
+/// bare inside the frame there is no dialog above it, so that pop takes out the
+/// only route this Navigator has. An empty history then trips
+/// `_history.isNotEmpty` on the next build, and because every preview reuses the
+/// same [DeviceFrameSwitcher] element, the broken Navigator follows the reader
+/// into whichever preview they open next.
+class _PreviewRootRoute<T> extends MaterialPageRoute<T> {
+  _PreviewRootRoute({required super.builder});
+
+  @override
+  bool didPop(T? result) {
+    // `canPop()` is false exactly when nothing sits below this route, which is
+    // the case this guard exists for. `isFirst` is not usable here: it reads
+    // the navigator's history mid-pop and already reports false.
+    final NavigatorState? nav = navigator;
+    if (nav != null && !nav.canPop()) return false;
+    return super.didPop(result);
   }
 }

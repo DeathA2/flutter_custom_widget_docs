@@ -19,19 +19,14 @@ class ArticleCardDocWidget implements Documentation {
 
   @override
   List<PropertyDoc> get properties => [
-        PropertyDoc(
-          name: 'articleType',
-          isRequired: true,
-          isNamed: true,
-          type: 'ArticleType',
-        ),
-        PropertyDoc(
-          name: 'key',
-          isRequired: false,
-          isNamed: true,
-          type: 'Key?',
-        ),
-      ];
+    PropertyDoc(
+      name: 'articleType',
+      isRequired: true,
+      isNamed: true,
+      type: 'ArticleType',
+    ),
+    PropertyDoc(name: 'key', isRequired: false, isNamed: true, type: 'Key?'),
+  ];
 
   @override
   String get snippet => '''
@@ -39,9 +34,9 @@ class ArticleCardDocWidget implements Documentation {
 
   @override
   List<String> get dependencies => [
-        'dep:doc_widget: (url: https://github.com/DeathA2/doc_widget_new.git, path: packages/doc_widget, ref: master)',
-        'dep:modal_bottom_sheet: 3.0.0'
-      ];
+    'dep:doc_widget: (url: https://github.com/DeathA2/doc_widget_new.git, path: packages/doc_widget, ref: master)',
+    'dep:modal_bottom_sheet: 3.0.0',
+  ];
 
   @override
   String get source => '''import 'package:doc_widget/doc_widget.dart';
@@ -67,9 +62,7 @@ class ArticleCard extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         ClipRRect(
-          borderRadius: BorderRadius.circular(
-            BorderRadiusApp.r16,
-          ), // border shadow
+          borderRadius: BorderRadius.circular(BorderRadiusApp.r16),
           child: ContainerWithShadow(
             child: Card(
               margin: const EdgeInsets.all(0),
@@ -78,7 +71,7 @@ class ArticleCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(BorderRadiusApp.r16),
                 side: BorderSide(color: ColorsApp.bgInput),
               ),
-              elevation: 0, // remove default shadow
+              elevation: 0,
               child: Stack(
                 children: [
                   _renderImage(selectImagePath(articleType)),
@@ -102,9 +95,7 @@ class ArticleCard extends StatelessWidget {
 
   Widget _renderCardContent(ArticleType articleType) {
     return Container(
-      margin: const EdgeInsets.only(
-        top: MarginApp.m160, // visible height of image in design
-      ),
+      margin: const EdgeInsets.only(top: MarginApp.m160),
       padding: const EdgeInsets.fromLTRB(
         PaddingApp.p16,
         PaddingApp.p8,
@@ -122,7 +113,7 @@ class ArticleCard extends StatelessWidget {
             style: TextStylesApp.bold(
               color: ColorsApp.greyPrimary,
               fontSize: FontSizeApp.s18,
-            ).copyWith(height: 30 / 18), // lineHeight / fontSize
+            ).copyWith(height: 30 / 18),
           ),
           const SizedBox(height: SizeApp.s4),
           Text(
@@ -139,24 +130,21 @@ class ArticleCard extends StatelessWidget {
     );
   }
 
-  // Trigger Ripple Effect
   Widget _renderInkWell(BuildContext context, ArticleType articleType) {
     return Positioned.fill(
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          onTap:
-              () => showCupertinoModalBottomSheet(
-                duration: DurationsApp.bottomSheetFullScreenDuration,
-                animationCurve: Curves.easeOut,
-                context: context,
-                builder:
-                    (context) => DetailArticleCard(articleType: articleType),
-                barrierColor: Colors.black.withValues(alpha: OpacityApp.opa80),
-                enableDrag: true,
-                isDismissible: true,
-                topRadius: const Radius.circular(BorderRadiusApp.r16),
-              ),
+          onTap: () => showCupertinoModalBottomSheet(
+            duration: DurationsApp.bottomSheetFullScreenDuration,
+            animationCurve: Curves.easeOut,
+            context: context,
+            builder: (context) => DetailArticleCard(articleType: articleType),
+            barrierColor: Colors.black.withValues(alpha: OpacityApp.opa80),
+            enableDrag: true,
+            isDismissible: true,
+            topRadius: const Radius.circular(BorderRadiusApp.r16),
+          ),
           splashColor: ColorsApp.white.withValues(alpha: OpacityApp.opa20),
           highlightColor: ColorsApp.white.withValues(alpha: OpacityApp.opa10),
         ),
