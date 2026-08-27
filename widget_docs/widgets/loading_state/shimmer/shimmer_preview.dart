@@ -1,0 +1,135 @@
+import 'package:doc_widget/doc_widget.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_custom_widget_docs/widgets/loading_state/shimmer.dart';
+import 'package:flutter_custom_widget_docs/widgets/loading_state/shimmer.doc_widget.dart';
+import 'package:flutter_custom_widget_docs/widgets/loading_state/skeleton_box.dart';
+
+import '../../preview/device_frame_switcher.dart';
+import '../../preview/preview_screen.dart';
+import '../../preview/demo_host.dart';
+
+final _documentation = ShimmerDocWidget();
+
+final shimmerPreview = ElementPreview(
+  document: _documentation,
+  previews: [..._previews],
+);
+
+final _previews = renderPreview(
+  title: "Shimmer",
+  description:
+      "A light band sweeping across the child, built from `ShaderMask` and a moving `LinearGradient` — no `shimmer` package. It is ambient, not a signal: it runs identically in every state, so a remount replaying it tells the user nothing untrue. It stops itself when the OS has animations disabled, since at that point it is only a flat grey block anyway.",
+  dependencies: _documentation.dependencies,
+  code: r'''
+Shimmer(
+  child: SkeletonBox(width: 200, height: 16),
+),
+  ''',
+  widget: DeviceFrameSwitcher(
+    child: DemoSurface(
+      child: Shimmer(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: const [
+            SkeletonBox(width: 160, height: 18),
+            SizedBox(height: 10),
+            SkeletonBox(height: 12),
+            SizedBox(height: 8),
+            SkeletonBox(height: 12),
+            SizedBox(height: 8),
+            SkeletonBox(width: 120, height: 12),
+          ],
+        ),
+      ),
+    ),
+  ),
+  widgetCode: r'''
+import 'package:doc_widget/doc_widget.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_custom_widget_docs/rsc/colors/custom_color_manager.dart';
+
+/// Hand-rolled shimmer — no `shimmer` package.
+@docWidget
+class Shimmer extends StatefulWidget {
+  const Shimmer({
+    required this.child,
+    this.baseColor = CustomColors.neutral200,
+    this.highlightColor = CustomColors.neutral100,
+    this.period = const Duration(milliseconds: 1400),
+    super.key,
+  });
+
+  final Widget child;
+  final Color baseColor;
+  final Color highlightColor;
+  final Duration period;
+
+  @override
+  State<Shimmer> createState() => _ShimmerState();
+}
+
+class _ShimmerState extends State<Shimmer> with SingleTickerProviderStateMixin {
+  /// Nullable, and only created where it actually starts. Never
+  /// `late final ... = AnimationController(vsync: this)`: a `late` field runs its
+  /// initialiser on first *read*, and for a shimmer that never runs, that first
+  /// read is `dispose()`.
+  AnimationController? _sweep;
+  bool _started = false;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_started) return;
+    _started = true;
+    if (!MediaQuery.disableAnimationsOf(context)) {
+      (_sweep ??= AnimationController(
+        vsync: this,
+        duration: widget.period,
+      )).repeat();
+    }
+  }
+
+  @override
+  void dispose() {
+    _sweep?.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final AnimationController? sweep = _sweep;
+    if (sweep == null) {
+      return ColorFiltered(
+        colorFilter: ColorFilter.mode(widget.baseColor, BlendMode.srcATop),
+        child: widget.child,
+      );
+    }
+
+    return AnimatedBuilder(
+      animation: sweep,
+      child: widget.child,
+      builder: (BuildContext context, Widget? child) {
+        final double t = sweep.value * 3 - 1;
+        return ShaderMask(
+          blendMode: BlendMode.srcATop,
+          shaderCallback: (Rect bounds) {
+            return LinearGradient(
+              begin: Alignment(t - 1, 0),
+              end: Alignment(t + 1, 0),
+              colors: <Color>[
+                widget.baseColor,
+                widget.highlightColor,
+                widget.baseColor,
+              ],
+              stops: const <double>[0.35, 0.5, 0.65],
+            ).createShader(bounds);
+          },
+          child: child,
+        );
+      },
+    );
+  }
+}
+  ''',
+);

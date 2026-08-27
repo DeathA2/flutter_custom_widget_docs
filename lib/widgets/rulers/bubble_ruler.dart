@@ -59,9 +59,7 @@ class BubbleColorBar extends StatelessWidget {
             ? _renderValueBubble(value, mainColorList, hatchMarkList)
             : const SizedBox.shrink(),
         Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: PaddingApp.p16,
-          ), // Prevent overflow hatch mark
+          padding: const EdgeInsets.symmetric(horizontal: PaddingApp.p16),
           child: Stack(
             children: [
               _renderColorRow(mainColorList, widthPercent),
@@ -152,9 +150,9 @@ class BubbleColorBar extends StatelessWidget {
       min: hatchMarkList[0],
       max: hatchMarkList[hatchMarkList.length - 1],
       values: [_formatValue(value, hatchMarkList)],
-      handlerWidth: 0, // this also be the horizontal padding of the slider
-      handlerHeight: 15, // prevent overflow bottom when setting hatch mark
-      handler: FlutterSliderHandler(opacity: 0), // hide default handler
+      handlerWidth: 0,
+      handlerHeight: 15,
+      handler: FlutterSliderHandler(opacity: 0),
       trackBar: const FlutterSliderTrackBar(
         inactiveTrackBar: BoxDecoration(color: Colors.transparent),
         activeTrackBar: BoxDecoration(color: Colors.transparent),
@@ -221,17 +219,15 @@ class BubbleColorBar extends StatelessWidget {
     double minHatchMarkList = hatchMarkList[0];
     double maxHatchMarkList = hatchMarkList[hatchMarkList.length - 1];
     if (value == null) {
-      return maxHatchMarkList +
-          100; // Workaround! - set value greater than max to hide tooltip
+      return maxHatchMarkList + 100;
     }
     if (value < hatchMarkList[0]) {
-      return minHatchMarkList; // prevent slider error when setting value smaller than min
+      return minHatchMarkList;
     }
     return value;
   }
 
   ////////////////////////////////////////////
-  // CUSTOM FUNCTION FOR DIFFERENT BAR TYPE //
   ////////////////////////////////////////////
 
   List<double> _chooseHatchMarkList(BarType barType) {
@@ -310,13 +306,10 @@ class BubbleColorBar extends StatelessWidget {
     switch (barType) {
       case BarType.bodyTemperature:
         if (isCel!) {
-          // [34-34.95, 34.96-37.55, 37.56-41.55, 41.56-42]
           return [96, 260, 400, 45];
         }
-        // [93-94.95, 94.96-99.55, 99.56-106.75, 106.76-108]
         return [196, 460, 720, 125];
       case BarType.spO2:
-        // [<90, 90 -100]
         return [(5 / 15 * 100).toInt(), (10 / 15 * 100).toInt()];
     }
   }

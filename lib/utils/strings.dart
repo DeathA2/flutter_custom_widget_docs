@@ -9,8 +9,9 @@ String formatDependenciesForPubspec(List<String> deps) {
     if (parts.length < 3) continue;
 
     final name = parts[1];
-    final value =
-        dep.substring(dep.indexOf(':', dep.indexOf(':') + 1) + 1).trim();
+    final value = dep
+        .substring(dep.indexOf(':', dep.indexOf(':') + 1) + 1)
+        .trim();
 
     if (isDev) {
       devDeps.add(_formatEntry(name, value));
@@ -36,7 +37,7 @@ String formatDependenciesForPubspec(List<String> deps) {
 
 String _formatEntry(String name, String value) {
   if (value.startsWith('(')) {
-    // dạng (url: ..., path: ..., ref: ...)
+    // git form: (url: ..., path: ..., ref: ...)
     final fields = value
         .replaceAll('(', '')
         .replaceAll(')', '')
@@ -53,7 +54,7 @@ String _formatEntry(String name, String value) {
         .join('\n');
     return '$name:\n  git:\n$fields';
   } else {
-    // dạng version bình thường
+    // plain version string
     return '$name: $value';
   }
 }
