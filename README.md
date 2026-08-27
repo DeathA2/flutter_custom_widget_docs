@@ -18,9 +18,9 @@ A documentation preview app and component catalog that demonstrates reusable cus
 
 ## Prerequisites
 
-- **Flutter:** `>=3.35.3` (recommended tested: `3.35.6`)
-- **Dart:** `3.9.2`
-- Project SDK constraint (see `pubspec.yaml`): `sdk: ^3.7.2`
+- **Flutter:** `>=3.44.6` (recommended tested: `3.44.6`)
+- **Dart:** `3.12.2`
+- Project SDK constraint (see `pubspec.yaml`): `sdk: ^3.12.2`
 
 ---
 
@@ -76,57 +76,85 @@ This repository contains both the app/library code and a documentation preview a
 
 ## Adding a widget and showing it in the Web preview
 
-Follow these steps to add a new widget and register it so it appears in the web preview app:
-
-1. Create the widget file under `lib/widget` (for example `lib/widgets/animation/touchable_opacity.dart`). Implement the widget as normal Flutter code. If you use `doc_widget`, annotate with `@docWidget` to enable generator support.
+1. Create the widget under `lib/widgets/<category>/` (for example
+   `lib/widgets/selection/count_badge.dart`) and annotate the public class with
+   `@docWidget`. Keep doc comments short — the long explanation belongs in the
+   preview description, which is what the docs app actually shows.
 
 ```dart
-// lib/widgets/animation/touchable_opacity.dart
+// lib/widgets/selection/count_badge.dart
 import 'package:doc_widget/doc_widget.dart';
 import 'package:flutter/material.dart';
 
+/// Red count badge, meant to sit over an icon inside a `Stack`.
 @docWidget
-class TouchableOpacity extends StatefulWidget { /* ... */ }
+class CountBadge extends StatelessWidget { /* ... */ }
 ```
 
-2. Run the generator if your project uses code generation:
+2. Run the generator to produce `count_badge.doc_widget.dart`:
 
 ```sh
 flutter pub get
-flutter pub run build_runner build --delete-conflicting-outputs
+dart run build_runner build --delete-conflicting-outputs
 ```
 
-3. Create a preview file under `widget_docs/widgets/` (for example `widget_docs/widgets/animation/touchable_opacity_preview.dart`). Register an `ElementPreview` or use the `renderPreview(...)` helper so the preview shows up in the drawer:
+3. Create the preview at
+   `widget_docs/widgets/<category>/<widget>/<widget>_preview.dart` and build it
+   with the `renderPreview(...)` helper:
 
 ```dart
-// widget_docs/widgets/animation/touchable_opacity_preview.dart
+// widget_docs/widgets/selection/count_badge/count_badge_preview.dart
 import 'package:doc_widget/doc_widget.dart';
 import 'package:flutter/material.dart';
-import '../../../lib/widgets/animation/touchable_opacity.dart';
+import 'package:flutter_custom_widget_docs/widgets/selection/count_badge.dart';
+import 'package:flutter_custom_widget_docs/widgets/selection/count_badge.doc_widget.dart';
 
-final touchablePreview = ElementPreview(
-	document: /* metadata */,
-	previews: [
-		WidgetPreview(
-			title: 'TouchableOpacity',
-			widget: Builder(builder: (_) => TouchableOpacity(/* ... */)),
-		),
-	],
+import '../../preview/device_frame_switcher.dart';
+import '../../preview/preview_screen.dart';
+
+final _documentation = CountBadgeDocWidget();
+
+final countBadgePreview = ElementPreview(
+  document: _documentation,
+  previews: [..._previews],
+);
+
+final _previews = renderPreview(
+  title: "Count Badge",
+  description: "What it is, and why it behaves the way it does.",
+  dependencies: _documentation.dependencies,
+  code: r'''
+CountBadge(count: 12),
+  ''',
+  widget: DeviceFrameSwitcher(child: CountBadge(count: 12)),
+  widgetCode: r'''
+// paste the widget source here
+  ''',
 );
 ```
 
-4. Format, analyze and run the preview locally to verify:
+   Interactive previews wrap the widget in `DemoValue<T>` from
+   `widget_docs/widgets/preview/demo_host.dart`; non-widget APIs use
+   `ManualDocumentation` instead of a generated `*DocWidget`.
+
+4. Register it in the category's `*_section.dart`, and register the section in
+   `widget_docs/doc_widget_main.dart` if the category is new.
+
+5. Verify locally, then commit and open a PR against `dev`:
 
 ```sh
+dart format .
+flutter analyze
+flutter test
 flutter run -t widget_docs/doc_widget_main.dart
 ```
 
-5. Commit your changes and open a Pull Request targeting the `dev` branch.
-
 Notes:
-- Make sure preview files are placed under `widget_docs/widgets/` so the preview app can discover them.
-- If the generator creates files that must be committed, include them or explain in the PR that reviewers should run codegen.
-- The CI runs format/analyze/tests on PRs; run those locally before creating the PR to avoid CI failures.
+- Preview files must live under `widget_docs/widgets/` for the preview app to find them.
+- Generated `*.doc_widget.dart` files are committed, so run codegen before pushing.
+- `@docWidget` cannot read a `const List<Color>` default — make such parameters
+  nullable and fall back to a file-level const, or the generator emits code it
+  cannot format.
 
 ---
 
@@ -214,13 +242,65 @@ For the full list, see `pubspec.yaml`.
 ├─ lib/                       # application/library code
 │  ├─ network/                # network layer & GitHub repo implementation
 │  ├─ rsc/                    # resources (colors, fonts, images, styles)
-│  └─ widgets/                # reusable widgets
+│  └─ widgets/                # reusable widgets, one folder per category
 ├─ widget_docs/               # documentation preview app + previews
 │  ├─ doc_preview_app.dart    # preview app shell
-│  └─ widgets/                # preview widgets (usage, device frame, etc.)
+│  ├─ doc_widget_main.dart    # entry point, registers every section
+│  └─ widgets/                # one folder per category, mirroring lib/widgets/
+│     └─ preview/             # shared preview helpers (device frame, demo host)
 ├─ assets/                    # assets (fonts, svg)
 └─ pubspec.yaml
 ```
+
+### Widget categories
+
+Each category is one folder under `lib/widgets/`, one folder under
+`widget_docs/widgets/`, and one `ElementsSection` in the preview drawer. The
+folder column below names the `lib/widgets/` folder; two of them predate this
+layout and are singular on the preview side (`cards/` → `widget_docs/widgets/card/`,
+`rulers/` → `widget_docs/widgets/ruler/`).
+
+| Category | Folder | Widgets |
+| --- | --- | --- |
+| Animations | `animation/` | TouchableOpacity, ShakeContainer, PulseOnChange, Breathing, AnimatedCounter, TypingDots, StreakFlame, EvolutionVisual, CompanionAvatar |
+| Buttons | `buttons/` | FilledButtonApp, OutlineButton, TextActionButton, BottomActionBar |
+| Inputs | `inputs/` | AppTextField, PinCodeInput, SearchField |
+| Selection Controls | `selection/` | SegmentedTabs, IconSegment, FilterChipBar, WeekStrip, PageIndicator, CountBadge |
+| Navigation | `navigation/` | FloatingBottomNav |
+| Cards & Tiles | `cards/` | ArticleCard, DetailArticleCard, SurfaceCard, SectionCard, SettingsTile, FeatureTile, GradientProgressCard, InfoChip, FreshnessPill, EmojiAvatar |
+| Charts & Progress | `charts/` | ProgressBar, ProgressRing, GaugeMeter, DonutChart, LineChart |
+| Rulers | `rulers/` | BubbleColorBar |
+| Loading & State | `loading_state/` | ActivityIndicator, Shimmer, SkeletonBox, LoadingOverlay, StatusToast / Toast, EmptyState, ErrorState |
+| Chat | `chat/` | ChatBubble, BubbleEnter, ReactionBar, DayDividerPill |
+| Gestures | `gesture/` | SwipeActions, SwipeHint, DragAutoScroll |
+| Images | `images/` | NetworkImageView, ProofImage, SliverImageHeader |
+| Celebration | `celebration/` | Confetti, CelebrationOverlay, coin flight |
+| Illustrations | `illustration/` | Coin, JarVisual |
+| Decorations | `decorations/` | DashedBorder |
+| Shadow Box | `shadow_box/` | ContainerWithShadow |
+
+Colors for these widgets live in `lib/rsc/colors/custom_color_manager.dart`
+(`CustomColors`). It is deliberately separate from `ColorsApp`: `ColorsApp` is
+the app palette, `CustomColors` is the teal/slate palette this widget set was
+designed against.
+
+### Previews with interaction, and non-widget APIs
+
+Two helpers under `widget_docs/widgets/preview/` cover the cases the plain
+`renderPreview(...)` recipe does not:
+
+- `demo_host.dart` — `DemoValue<T>` holds state for previews that need a real
+  `value` + `onChanged` round trip (tabs, chips, text fields, nav bar), and
+  `DemoSurface` gives consistent padding inside the device frame.
+- `manual_documentation.dart` — `ManualDocumentation` hand-writes a
+  `Documentation` for APIs that `@docWidget` cannot read, because they are not
+  widget classes: top-level functions (`playCoinFlight`), static-only classes
+  (`DragAutoScroll`), and `SliverPersistentHeaderDelegate` subclasses
+  (`SliverImageHeader`).
+
+`test/preview_smoke_test.dart` builds every registered preview and fails if any
+of them throws, so a broken preview is caught by `flutter test` rather than by
+opening the web app.
 
 ---
 
@@ -234,61 +314,3 @@ Open `widget_docs/doc_preview_app.dart` to run the documentation preview app. Ke
 The preview app drawer includes a small repository info area (owner + contributors) and a "Contribute here" link which opens the repository in the browser or via `url_launcher` on native platforms.
 
 ---
-
-## Thêm một widget và hiển thị trên Web Preview
-
-Dưới đây là các bước để thêm một widget mới và hiển thị nó trong web preview (những thao tác giống những gì đã thực hiện trong repo):
-
-1. Tạo file widget trong `lib/` (ví dụ `lib/widgets/animation/touchable_opacity.dart`). Viết widget theo chuẩn Flutter. Sử dụng `@docWidget` nếu bạn muốn khai thác `doc_widget` generator.
-
-```dart
-// lib/widgets/animation/touchable_opacity.dart
-import 'package:doc_widget/doc_widget.dart';
-import 'package:flutter/material.dart';
-
-@docWidget
-class TouchableOpacity extends StatefulWidget { /* ... */ }
-```
-
-2. Tạo file preview trong `widget_docs/widgets/` (ví dụ `widget_docs/widgets/animation/touchable_opacity_preview.dart`). Đăng ký một `ElementPreview` hoặc dùng helper `renderPreview(...)` để preview xuất hiện trong drawer.
-
-```dart
-// widget_docs/widgets/animation/touchable_opacity_preview.dart
-import 'package:doc_widget/doc_widget.dart';
-import 'package:flutter/material.dart';
-import '../../../lib/widgets/animation/touchable_opacity.dart';
-
-final touchablePreview = ElementPreview(
-	document: /* metadata */,
-	previews: [
-		WidgetPreview(
-			title: 'TouchableOpacity',
-			widget: Builder(builder: (_) => TouchableOpacity(/* ... */)),
-		),
-	],
-);
-```
-
-3. Chạy generator (nếu project sử dụng codegen):
-
-```sh
-flutter pub get
-flutter pub run build_runner build --delete-conflicting-outputs
-```
-
-4. Kiểm tra, định dạng và chạy preview locally:
-
-```sh
-dart format .
-flutter analyze
-flutter run -t widget_docs/doc_widget_main.dart
-```
-
-5. Commit, push và mở PR vào nhánh `dev`.
-
-Ghi chú ngắn:
-- Đảm bảo file preview nằm trong thư mục mà preview app scan (thường là `widget_docs/widgets/`).
-- Nếu generator tạo các file cần commit, nhớ commit các file generated theo quy ước dự án.
-- Nếu CI của repo check format/analyze/tests, chạy những lệnh kiểm tra trước khi tạo PR để tránh CI fail.
-
-

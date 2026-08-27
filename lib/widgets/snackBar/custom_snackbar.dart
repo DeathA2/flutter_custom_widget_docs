@@ -34,13 +34,10 @@ class CustomSnackBar {
               right: SizeApp.s16,
               bottom: marginBottom,
             ),
-            padding: const EdgeInsets.all(0.0), // remove default padding
+            padding: const EdgeInsets.all(0.0),
             behavior: SnackBarBehavior.floating,
             backgroundColor: ColorsApp.greyPrimary,
             duration: duration,
-            // wrap content with "WillPopScope" to remove snackbar when the user presses back button (Android)
-            // WillPopScope is deprecated on newer Flutter versions; ignore the deprecation here until
-            // a full PopScope migration is implemented.
             // ignore: deprecated_member_use
             content: WillPopScope(
               onWillPop: () async {
@@ -73,16 +70,15 @@ class CustomSnackBar {
                 ],
               ),
             ),
-            action:
-                customAction != null
-                    ? SnackBarAction(
-                      label: customActionLabel as String,
-                      textColor: customActionLabelColor ?? ColorsApp.white,
-                      onPressed: () {
-                        customAction();
-                      },
-                    )
-                    : null,
+            action: customAction != null
+                ? SnackBarAction(
+                    label: customActionLabel as String,
+                    textColor: customActionLabelColor ?? ColorsApp.white,
+                    onPressed: () {
+                      customAction();
+                    },
+                  )
+                : null,
           ),
         )
         .closed

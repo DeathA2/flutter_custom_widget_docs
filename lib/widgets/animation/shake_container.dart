@@ -26,6 +26,7 @@ abstract class AnimationControllerState<T extends StatefulWidget>
   }
 }
 
+/// Shakes [child] horizontally — for error states, or to pull the eye to a change.
 @docWidget
 class ShakeContainer extends StatefulWidget {
   const ShakeContainer({
@@ -34,6 +35,9 @@ class ShakeContainer extends StatefulWidget {
     required this.shakeOffset,
     this.shakeCount = 3,
     this.shakeDuration = const Duration(milliseconds: 400),
+    this.shakeTrigger,
+    this.decay = false,
+    this.respectReducedMotion = true,
   });
 
   /// The child widget that will be wrapped and animated with a shake effect.
@@ -47,6 +51,18 @@ class ShakeContainer extends StatefulWidget {
 
   /// The total duration of the shake animation.
   final Duration shakeDuration;
+
+  /// Changing this value shakes, including on the first build. Usually the error
+  /// message. Null never shakes on its own — only [ShakeContainerState.shake] does.
+  final Object? shakeTrigger;
+
+  /// Tapers the amplitude to 0 over the animation, so the shake rests exactly
+  /// where it started. Off keeps every swing at full amplitude.
+  final bool decay;
+
+  /// Stay still when the OS has "reduce motion" turned on.
+  final bool respectReducedMotion;
+
   @override
   ShakeContainerState createState() => ShakeContainerState();
 }
@@ -57,10 +73,29 @@ class ShakeContainerState extends AnimationControllerState<ShakeContainer> {
 
   ShakeContainerState();
 
+  bool _startedOnce = false;
+
   @override
   void initState() {
     super.initState();
     animationController.addStatusListener(_updateStatus);
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_startedOnce) return;
+    _startedOnce = true;
+    if (widget.shakeTrigger != null) shake();
+  }
+
+  @override
+  void didUpdateWidget(covariant ShakeContainer oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.shakeTrigger != oldWidget.shakeTrigger &&
+        widget.shakeTrigger != null) {
+      shake();
+    }
   }
 
   @override
@@ -76,7 +111,11 @@ class ShakeContainerState extends AnimationControllerState<ShakeContainer> {
   }
 
   void shake() {
-    animationController.forward();
+    if (widget.respectReducedMotion &&
+        MediaQuery.disableAnimationsOf(context)) {
+      return;
+    }
+    animationController.forward(from: 0);
   }
 
   @override
@@ -88,8 +127,9 @@ class ShakeContainerState extends AnimationControllerState<ShakeContainer> {
         final sineValue = sin(
           widget.shakeCount * 2 * pi * animationController.value,
         );
+        final decay = widget.decay ? 1 - animationController.value : 1.0;
         return Transform.translate(
-          offset: Offset(sineValue * widget.shakeOffset, 0),
+          offset: Offset(sineValue * widget.shakeOffset * decay, 0),
           child: child,
         );
       },
