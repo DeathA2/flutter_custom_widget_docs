@@ -11,6 +11,7 @@ import 'package:flutter_custom_widget_docs/network/implement/github_repository_i
 import 'package:flutter_custom_widget_docs/network/model/github/github_user_model.dart';
 import 'package:flutter_custom_widget_docs/network/model/github/repo_information_model.dart';
 import 'package:flutter_custom_widget_docs/rsc/styles/theme_manager.dart';
+import 'widgets/preview/contributors_row.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 /// Flutter application responsible to show all elements that are generated.
@@ -85,12 +86,11 @@ class _DocPreviewAppState extends State<DocPreviewApp> {
                 radius: 18,
                 backgroundImage:
                     owner.avatarUrl != null && owner.avatarUrl!.isNotEmpty
-                        ? NetworkImage(owner.avatarUrl!)
-                        : null,
-                child:
-                    owner.avatarUrl == null || owner.avatarUrl!.isEmpty
-                        ? const Icon(Icons.person)
-                        : null,
+                    ? NetworkImage(owner.avatarUrl!)
+                    : null,
+                child: owner.avatarUrl == null || owner.avatarUrl!.isEmpty
+                    ? const Icon(Icons.person)
+                    : null,
               ),
               const SizedBox(width: 8),
               Expanded(
@@ -132,68 +132,10 @@ class _DocPreviewAppState extends State<DocPreviewApp> {
   }
 
   Widget _renderContributorsRow(BuildContext context) {
-    final maxAvatars = 6; // show 5-7 per request; choose 6
-    final count = _contributors.length;
-    if (count == 0) return const SizedBox.shrink();
-
-    final avatars = <Widget>[];
-    final displayCount = count > maxAvatars ? maxAvatars : count;
-    for (var i = 0; i < displayCount; i++) {
-      final u = _contributors[i];
-      avatars.add(
-        Tooltip(
-          message: u.login ?? '',
-          child: GestureDetector(
-            onTap: () => _openUrl(u.htmlUrl ?? u.url ?? '', context),
-            child: Container(
-              margin: EdgeInsets.only(left: i == 0 ? 0 : -8.0),
-              child: CircleAvatar(
-                radius: 14,
-                backgroundImage:
-                    u.avatarUrl != null && u.avatarUrl!.isNotEmpty
-                        ? NetworkImage(u.avatarUrl!)
-                        : null,
-                backgroundColor: Colors.grey[300],
-              ),
-            ),
-          ),
-        ),
-      );
-    }
-
-    Widget trailing = const SizedBox.shrink();
-    if (count > maxAvatars) {
-      final remaining = count - maxAvatars;
-      final names = _contributors
-          .skip(maxAvatars)
-          .map((e) => e.login ?? '')
-          .join(', ');
-      trailing = Tooltip(
-        message: names,
-        child: Container(
-          margin: const EdgeInsets.only(left: -8.0),
-          child: CircleAvatar(
-            radius: 14,
-            backgroundColor: Colors.black54,
-            child: Text(
-              '+$remaining',
-              style: const TextStyle(fontSize: 12, color: Colors.white),
-            ),
-          ),
-        ),
-      );
-    }
-
-    return Row(
-      children: [
-        ...avatars,
-        if (count > maxAvatars) trailing,
-        const SizedBox(width: 8),
-        Text(
-          '$count contributors',
-          style: const TextStyle(fontSize: 12, color: Colors.grey),
-        ),
-      ],
+    return ContributorsRow(
+      contributors: _contributors,
+      onTapContributor: (GithubUserModel u) =>
+          _openUrl(u.htmlUrl ?? u.url ?? '', context),
     );
   }
 
@@ -254,10 +196,9 @@ class _DocPreviewAppState extends State<DocPreviewApp> {
                 ),
               ),
             ),
-            child:
-                _loadingRepo
-                    ? const SizedBox.shrink()
-                    : _repoInfoSection(context),
+            child: _loadingRepo
+                ? const SizedBox.shrink()
+                : _repoInfoSection(context),
           ),
         ],
       );
@@ -269,23 +210,21 @@ class _DocPreviewAppState extends State<DocPreviewApp> {
       home: Scaffold(
         key: _scaffoldKey,
         drawer: isMobile() ? renderDrawer() : null,
-        appBar:
-            isMobile()
-                ? PreferredSize(
-                  preferredSize: const Size.fromHeight(kToolbarHeight),
-                  child: AppBarCustom(title: _selectedItem.document.name),
-                )
-                : null,
-        body:
-            isMobile()
-                ? renderBody()
-                : Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(width: 320, child: renderDrawer()),
-                    Expanded(child: renderBody()),
-                  ],
-                ),
+        appBar: isMobile()
+            ? PreferredSize(
+                preferredSize: const Size.fromHeight(kToolbarHeight),
+                child: AppBarCustom(title: _selectedItem.document.name),
+              )
+            : null,
+        body: isMobile()
+            ? renderBody()
+            : Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(width: 320, child: renderDrawer()),
+                  Expanded(child: renderBody()),
+                ],
+              ),
       ),
     );
   }

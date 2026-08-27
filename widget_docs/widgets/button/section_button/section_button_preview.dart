@@ -23,7 +23,6 @@ final _defaultButtonPreview = renderPreview(
       SectionButton(
         label: 'Section Button App',
         onPressed: () {
-          print("onClick");
         },
         leftIcon: ImagesApp.icMedicine,
         rightIcon: ImagesApp.icCaret,
@@ -33,9 +32,7 @@ final _defaultButtonPreview = renderPreview(
   widget: DeviceFrameSwitcher(
     child: SectionButton(
       label: 'Section Button App',
-      onPressed: () {
-        print("onClick");
-      },
+      onPressed: () {},
       leftIcon: ImagesApp.icCopy,
       rightIcon: ImagesApp.icSnackbarSuccess,
     ),

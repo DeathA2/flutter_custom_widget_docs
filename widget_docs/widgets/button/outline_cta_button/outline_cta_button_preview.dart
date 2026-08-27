@@ -10,7 +10,7 @@ import '../../preview/demo_host.dart';
 
 final _documentation = OutlineButtonDocWidget();
 
-final outlineButtonPreview = ElementPreview(
+final outlineCtaButtonPreview = ElementPreview(
   document: _documentation,
   previews: [..._previews],
 );

@@ -24,28 +24,15 @@ final _defaultButtonPreview = renderPreview(
     isFocus: true,
     label: "Button",
     onPressed: () {
-      print("onClick");
     },
   )
   ''',
   widget: DeviceFrameSwitcher(
     child: Row(
       children: [
-        FocusButton(
-          isFocus: true,
-          label: "Focus",
-          onPressed: () {
-            print("onClick");
-          },
-        ),
+        FocusButton(isFocus: true, label: "Focus", onPressed: () {}),
         Container(width: 10),
-        FocusButton(
-          isFocus: false,
-          label: "Unfocus",
-          onPressed: () {
-            print("onClick");
-          },
-        ),
+        FocusButton(isFocus: false, label: "Unfocus", onPressed: () {}),
       ],
     ),
   ),

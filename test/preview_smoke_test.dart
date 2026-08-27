@@ -3,18 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../widget_docs/widgets/animation/animation_section.dart';
-import '../widget_docs/widgets/buttons/buttons_section.dart';
+import '../widget_docs/widgets/bottom_navigation_bar/navigation_bar_section.dart';
+import '../widget_docs/widgets/button/button_section.dart';
 import '../widget_docs/widgets/card/card_section.dart';
 import '../widget_docs/widgets/celebration/celebration_section.dart';
 import '../widget_docs/widgets/charts/charts_section.dart';
 import '../widget_docs/widgets/chat/chat_section.dart';
+import '../widget_docs/widgets/checkbox/checkbox_section.dart';
 import '../widget_docs/widgets/decorations/decorations_section.dart';
 import '../widget_docs/widgets/gesture/gesture_section.dart';
 import '../widget_docs/widgets/illustration/illustration_section.dart';
 import '../widget_docs/widgets/images/images_section.dart';
 import '../widget_docs/widgets/inputs/inputs_section.dart';
 import '../widget_docs/widgets/loading_state/loading_state_section.dart';
-import '../widget_docs/widgets/navigation/navigation_section.dart';
 import '../widget_docs/widgets/ruler/ruler_section.dart';
 import '../widget_docs/widgets/selection/selection_section.dart';
 import '../widget_docs/widgets/shadow_box/shadow_box_section.dart';
@@ -22,10 +23,11 @@ import '../widget_docs/widgets/shadow_box/shadow_box_section.dart';
 void main() {
   final List<ElementsSection> sections = <ElementsSection>[
     renderAnimationSection(),
-    renderButtonsSection(),
+    renderButtonSection(),
+    renderCheckBoxSection(),
     renderInputsSection(),
     renderSelectionSection(),
-    renderNavigationSection(),
+    renderNavigationBarSection(),
     renderCardSection(),
     renderChartsSection(),
     renderRulerSection(),

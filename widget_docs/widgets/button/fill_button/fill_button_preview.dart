@@ -14,6 +14,7 @@ final fillButtonPreview = ElementPreview(
     ..._defaultButtonPreview,
     ..._customButtonPreview,
     ..._loadingButtonPreview,
+    ..._primaryCtaPreview,
   ],
 );
 
@@ -28,16 +29,10 @@ final _defaultButtonPreview = renderPreview(
     FilledButtonApp(
         label: "Button",
         onPressed: () {
-        print("onClick");
     },)
     ''',
   widget: DeviceFrameSwitcher(
-    child: FilledButtonApp(
-      label: "Button",
-      onPressed: () {
-        print("onClick");
-      },
-    ),
+    child: FilledButtonApp(label: "Button", onPressed: () {}),
   ),
 );
 
@@ -54,7 +49,6 @@ final _customButtonPreview = renderPreview(
       textColor: Colors.black,
       color: Colors.yellow,
       onPressed: () {
-        print("onClick");
     },)
     ''',
   widget: DeviceFrameSwitcher(
@@ -62,9 +56,7 @@ final _customButtonPreview = renderPreview(
       label: "Custom Button",
       textColor: Colors.black,
       color: Colors.yellow,
-      onPressed: () {
-        print("onClick");
-      },
+      onPressed: () {},
     ),
   ),
 );
@@ -73,7 +65,7 @@ final _customButtonPreview = renderPreview(
 final _loadingButtonPreview = renderPreview(
   title: "III. Loading Button",
   dependencies: [],
-  widgetCode: documentation.source,
+  widgetCode: "",
   description:
       "  We can enable or disable the loading status of the button by setting isLoading parameter.",
   code: '''
@@ -83,7 +75,6 @@ final _loadingButtonPreview = renderPreview(
       color: Colors.yellow,
       isLoading: true,
       onPressed: () {
-        print("onClick");
     },)
     ''',
   widget: DeviceFrameSwitcher(
@@ -92,9 +83,49 @@ final _loadingButtonPreview = renderPreview(
       textColor: Colors.black,
       color: Colors.yellow,
       isLoading: true,
+      onPressed: () {},
+    ),
+  ),
+);
+
+//Primary CTA variant
+final _primaryCtaPreview = renderPreview(
+  title: "IV. Primary CTA",
+  dependencies: [],
+  widgetCode: documentation.source,
+  description:
+      "The primaryCta variant draws a rounded colour block with a bold white label that scales down on press, for the one action a screen is about. Its colour is fixed rather than taken from the theme, so it stays the button worth pressing on every audience.",
+  code: '''
+    FilledButtonApp(
+      label: "Save changes",
+      variant: FilledButtonVariant.primaryCta,
       onPressed: () {
-        print("onClick");
-      },
+    },)
+    ''',
+  widget: DeviceFrameSwitcher(
+    child: Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        FilledButtonApp(
+          label: "Save changes",
+          variant: FilledButtonVariant.primaryCta,
+          onPressed: () {},
+        ),
+        const SizedBox(height: 12),
+        FilledButtonApp(
+          label: "Large",
+          variant: FilledButtonVariant.primaryCta,
+          large: true,
+          onPressed: () {},
+        ),
+        const SizedBox(height: 12),
+        FilledButtonApp(
+          label: "Disabled",
+          variant: FilledButtonVariant.primaryCta,
+          isEnable: false,
+          onPressed: () {},
+        ),
+      ],
     ),
   ),
 );

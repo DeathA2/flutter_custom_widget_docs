@@ -23,17 +23,13 @@ You can not interact with it on web platform, because it's just a image.''',
   code: '''
 child: BottomNavigationBarCustom(
       selectedIndex: 2,
-      onItemTapped: (value) {
-        print(value);
-      },
+      onItemTapped: (value) {},
     ),
     ''',
   widget: DeviceFrameSwitcher(
     child: BottomNavigationBarCustom(
       selectedIndex: 2,
-      onItemTapped: (value) {
-        print(value);
-      },
+      onItemTapped: (value) {},
     ),
   ),
 );

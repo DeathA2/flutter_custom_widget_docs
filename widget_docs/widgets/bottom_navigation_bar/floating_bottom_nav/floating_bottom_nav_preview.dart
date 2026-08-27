@@ -1,7 +1,7 @@
 import 'package:doc_widget/doc_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_custom_widget_docs/widgets/navigation/floating_bottom_nav.dart';
-import 'package:flutter_custom_widget_docs/widgets/navigation/floating_bottom_nav.doc_widget.dart';
+import 'package:flutter_custom_widget_docs/widgets/bottom_navigation_bar/floating_bottom_nav.dart';
+import 'package:flutter_custom_widget_docs/widgets/bottom_navigation_bar/floating_bottom_nav.doc_widget.dart';
 
 import '../../preview/device_frame_switcher.dart';
 import '../../preview/preview_screen.dart';
